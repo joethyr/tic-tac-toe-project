@@ -1,4 +1,4 @@
-# 2. Psuedocode the High level Approach
+# 1. Psuedocode the High level Approach
 
 # Set up the game initially
 #   Create a game board
@@ -15,7 +15,8 @@
 
 # A high level pseudocoding will cover the major actions
 
-# 3. Assign Actions to Objects
+
+# 2. Assign Actions to Objects
 
 # Assigning actions to object to help clarify which objects are really classes and who should own what.
 # Delegate as many actions to an appropriate object as possible instead of keeping them all contained within a god class.
@@ -38,3 +39,4 @@
 # - TicTacToe (controls the gameplay)
 # - Board (keeps the board state and renders it)
 # - Player (create each player)
+
