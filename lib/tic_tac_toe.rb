@@ -3,6 +3,7 @@
 require_relative 'player'
 require_relative 'board'
 
+# Controls the gamplay
 class TicTacToe
   attr_accessor :player1, :player2
 
@@ -18,10 +19,20 @@ class TicTacToe
     { player1: Player.new('Player 1', 'X'),
       player2: Player.new('Player 2', 'O') }
   end
+
+play
+  loop inifinitely
+    call the board display method
+    ask current player what board cell to take
+    break loop if current player has won
+    switch players
+
+
+
 end
 
-joe = TicTacToe.new(player1: Player.new('Joe', 'J'), player2: Player.new('Bob', 'B'))
-
+play = TicTacToe.new(player1: Player.new('Joe', 'J'), player2: Player.new('Bob', 'B'))
+play
 # Set up the game initially [tictactoe]
 #   Create a game board [board]
 #   Create a couple players [player]
