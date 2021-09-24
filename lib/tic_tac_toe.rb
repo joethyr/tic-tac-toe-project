@@ -2,17 +2,20 @@
 
 require_relative 'player'
 require_relative 'board'
+require_relative 'prompts'
 
 # Controls the gamplay
 class TicTacToe
-  attr_accessor :player1, :player2
+  include Prompts
+  attr_accessor :player1, :player2, :current_player, :board
 
   def initialize(options)
     options = defaults.merge(options)
 
-    @board = Board.new
     @player1 = options[:player1]
     @player2 = options[:player2]
+    @current_player = player1
+    @board = Board.new
   end
 
   def defaults
@@ -20,28 +23,21 @@ class TicTacToe
       player2: Player.new('Player 2', 'O') }
   end
 
-play
-  loop inifinitely
-    call the board display method
-    ask current player what board cell to take
-    break loop if current player has won
-    switch players
+  def player_choice
+    print '>'
+    choice = gets.chomp.to_i
+    current_player.choices << choice
+    update
+  end
 
-
+  def update
+    board.cell[current_player.choices.last - 1] = current_player.symbol
+    board.render
+  end
 
 end
 
-play = TicTacToe.new(player1: Player.new('Joe', 'J'), player2: Player.new('Bob', 'B'))
-play
-# Set up the game initially [tictactoe]
-#   Create a game board [board]
-#   Create a couple players [player]
-
-# Start the game loop [tictactoe]
-#   Display the board [board]
-#   Ask for and validate the current player's move [player]
-#   If the game should end [tictactoe]
-#     Display the proper victory / draw prompt
-#     Stop looping
-#   Else
-#     Switch to the next player and keep looping [tictactoe]
+game = TicTacToe.new(player1: Player.new('Joe', 'J'), player2: Player.new('Bob', 'B'))
+game.introduction
+game.ask_choice
+game.player_choice

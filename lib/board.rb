@@ -1,23 +1,20 @@
+# frozen_string_literal: true
 
+# Maintains board state
 class Board
-  attr_accessor :board
+  attr_accessor :board, :cell
 
   def initialize
-    @board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    @cell = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   end
 
   def render
-    board.each do |cell|
-      if [3, 6].include?(cell)
-        print " #{board[cell - 1]} |\n"
-        puts '---+---+---+'
-      else
-        print " #{board[cell - 1]} |"
-      end
-    end
-    puts "\n"
+    puts <<-SHOW
+ #{cell[0]} | #{cell[1]} | #{cell[2]}
+ ---+---+---
+ #{cell[3]} | #{cell[4]} | #{cell[5]}
+ ---+---+---
+ #{cell[6]} | #{cell[7]} | #{cell[8]}
+    SHOW
   end
 end
-
-test = Board.new
-test.render
