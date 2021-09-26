@@ -26,6 +26,7 @@ class TicTacToe
   def player_choice
     print '>'
     choice = gets.chomp.to_i
+    puts "#{current_player.name}, you have taken the ##{choice} spot."
     current_player.choices << choice
     update
   end
@@ -35,9 +36,19 @@ class TicTacToe
     board.render
   end
 
+  def switch_players
+    if @current_player == player1
+      @current_player = player2
+    else
+      @current_player = player1
+    end
+  end
+
 end
 
 game = TicTacToe.new(player1: Player.new('Joe', 'J'), player2: Player.new('Bob', 'B'))
 game.introduction
 game.ask_choice
 game.player_choice
+game.switch_players
+puts game.current_player.name

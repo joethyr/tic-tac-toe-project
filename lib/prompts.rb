@@ -8,6 +8,11 @@ module Prompts
   # ask what cell the player chooses
   def ask_choice
     board.render
-    puts "#{current_player.name}, which cell will you take?"
+    puts "Which cell will you take?"
   end
+
+  def state_choice
+    put "#{current_player.name}, you have now taken the ##{choice} spot."
+  end
+
 end
