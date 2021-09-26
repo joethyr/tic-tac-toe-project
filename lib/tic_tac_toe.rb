@@ -48,7 +48,6 @@ class TicTacToe
     player_turn
     ask_choice
     player_choice
-    switch_players
   end
 
   def winning_choices
@@ -56,7 +55,14 @@ class TicTacToe
   end
 
   def play
-    turn until check_won?
+    loop do
+      turn
+      if check_won? == true
+        puts "#{current_player.name} you have won the game!"
+        break
+      end
+      switch_players
+    end
   end
 
   def check_won?
