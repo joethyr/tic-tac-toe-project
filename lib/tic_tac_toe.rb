@@ -44,11 +44,26 @@ class TicTacToe
     end
   end
 
+  def turn
+    player_turn
+    ask_choice
+    player_choice
+    switch_players
+  end
+
+  def winning_choices
+    board.winning_choices
+  end
+
+  def play
+    turn until check_won?
+  end
+
+  def check_won?
+    winning_choices.any? { |row| (row - current_player.choices).empty? }
+  end
 end
 
 game = TicTacToe.new(player1: Player.new('Joe', 'J'), player2: Player.new('Bob', 'B'))
 game.introduction
-game.ask_choice
-game.player_choice
-game.switch_players
-puts game.current_player.name
+game.play

@@ -11,8 +11,9 @@ module Prompts
     puts "Which cell will you take?"
   end
 
-  def state_choice
-    put "#{current_player.name}, you have now taken the ##{choice} spot."
+  def player_turn
+    puts "#{current_player.name}, its your turn!"
   end
+
 
 end
