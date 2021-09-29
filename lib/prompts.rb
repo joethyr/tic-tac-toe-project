@@ -9,6 +9,7 @@ module Prompts
   def ask_choice
     board.render
     puts "Which cell will you take?"
+    player_choice
   end
 
   def player_turn

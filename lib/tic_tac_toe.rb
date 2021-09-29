@@ -8,7 +8,6 @@ require_relative 'prompts'
 class TicTacToe
   include Prompts
   attr_accessor :player1, :player2, :current_player, :board
-
   def initialize(options)
     options = defaults.merge(options)
 
@@ -26,11 +25,28 @@ class TicTacToe
   def player_choice
     print '>'
     choice = gets.chomp.to_i
-    puts "#{current_player.name}, you have taken the ##{choice} spot."
-    puts "--------------------------------"
-    current_player.choices << choice
-    update
+    if board.cell[choice - 1].is_a? String
+      puts "that number has already been taken"
+      return ask_choice
+    elsif (1..9).to_a.any? { |e| e == choice }
+      puts "#{current_player.name}, you have taken the ##{choice} spot."
+      puts "--------------------------------"
+      current_player.choices << choice
+      update
+    else
+      puts "the number entered is not correct."
+      return ask_choice
+    end
   end
+
+  def valid_num(choice)
+    (1..9).to_a.any? { |e| e == choice }
+  end
+
+  def num_taken(choice)
+    board.cell[choice - 1].is_a? String
+  end
+
 
   def update
     board.cell[current_player.choices.last - 1] = current_player.symbol
@@ -48,18 +64,30 @@ class TicTacToe
   def turn
     player_turn
     ask_choice
-    player_choice
-  end
-
-  def winning_choices
-    board.winning_choices
   end
 
   def play
+    introduction
     loop do
       turn
       break if game_over
       switch_players
+    end
+    play_again
+  end
+
+  def play_again
+    puts "Would you like to play another game?\nY or N?"
+    print ">"
+    answer = gets.chomp.upcase
+    if answer == "YES" || answer == "Y"
+      return play
+    elsif answer == "NO" || answer == "N"
+      puts "goodbye!"
+      exit
+    else
+      puts "please enter yes or no."
+      return play_again
     end
   end
 
@@ -86,7 +114,7 @@ class TicTacToe
   end
 
   def game_won?
-    winning_choices.any? { |row| (row - current_player.choices).empty? }
+    board.winning_choices.any? { |row| (row - current_player.choices).empty? }
   end
 
   def game_tie?
@@ -95,5 +123,4 @@ class TicTacToe
 end
 
 game = TicTacToe.new(player1: Player.new('Joe', 'J'), player2: Player.new('Bob', 'B'))
-game.introduction
 game.play
