@@ -27,6 +27,7 @@ class TicTacToe
     print '>'
     choice = gets.chomp.to_i
     puts "#{current_player.name}, you have taken the ##{choice} spot."
+    puts "--------------------------------"
     current_player.choices << choice
     update
   end
@@ -57,16 +58,39 @@ class TicTacToe
   def play
     loop do
       turn
-      if check_won? == true
-        puts "#{current_player.name} you have won the game!"
-        break
-      end
+      break if game_over
       switch_players
     end
   end
 
-  def check_won?
+  def check_won
+    if game_won?
+      puts "#{current_player.name} you have won the game!"
+      true
+    else
+      false
+    end
+  end
+
+  def check_tie
+    if game_tie?
+      puts "Woah! Looks like the game has come to a draw!"
+      true
+    else
+      false
+    end
+  end
+
+  def game_over
+    check_won || check_tie
+  end
+
+  def game_won?
     winning_choices.any? { |row| (row - current_player.choices).empty? }
+  end
+
+  def game_tie?
+    board.cell.all? { |x| x.is_a? String }
   end
 end
 

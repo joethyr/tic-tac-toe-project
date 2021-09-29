@@ -12,7 +12,7 @@ module Prompts
   end
 
   def player_turn
-    puts "#{current_player.name}, its your turn!"
+    puts "\n#{current_player.name}, its your turn!"
   end
 
 
