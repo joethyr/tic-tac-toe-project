@@ -23,27 +23,32 @@ class TicTacToe
   end
 
   def player_choice
-    print '>'
     choice = gets.chomp.to_i
-    num_taken(choice) || valid_num(choice)
+    position_taken(choice) || check_position(choice)
   end
 
-  def valid_num(choice)
+  def ask_choice
+    board.render
+    ask_choice_prompt
+    player_choice
+  end
+
+  def check_position(choice)
     if (1..9).to_a.any? { |e| e == choice }
       puts "#{current_player.name}, you have taken the ##{choice} spot."
-      puts "--------------------------------"
+      valid_position_prompt
       current_player.choices << choice
       update
       true
     else
-      puts "the number entered is not correct."
+      invalid_position_prompt
       ask_choice
     end
   end
 
-  def num_taken(choice)
+  def position_taken(choice)
     if board.cell[choice - 1].is_a? String
-      puts "that number has already been taken"
+      position_taken_prompt
       ask_choice
     else
       false
@@ -79,27 +84,9 @@ class TicTacToe
     play_again
   end
 
-  def play_again
-    puts "Would you like to play another game?\nY or N?"
-    print ">"
-    answer = gets.chomp.upcase
-    case answer
-    when "YES", "Y"
-      play
-    when "NO", "N"
-      puts "Goodbye!"
-      exit
-    else
-      puts "please enter yes or no."
-      play_again
-    end
-
-
-  end
-
   def check_won
     if board.winning_choices.any? { |row| (row - current_player.choices).empty? }
-      puts "#{current_player.name} you have won the game!"
+      check_won_prompt
       true
     else
       false
@@ -108,7 +95,7 @@ class TicTacToe
 
   def check_tie
     if board.cell.all? { |x| x.is_a? String }
-      puts "Woah! Looks like the game has come to a draw!"
+      check_tie_prompt
       true
     else
       false
@@ -118,8 +105,22 @@ class TicTacToe
   def game_over
     check_won || check_tie
   end
-end
 
+  def play_again
+    play_again_prompt
+    answer = gets.chomp.upcase
+    case answer
+    when "YES", "Y"
+      play
+    when "NO", "N"
+      end_game_prompt
+      exit
+    else
+      invalid_play_again_prompt
+      play_again
+    end
+  end
+end
 
 game = TicTacToe.new(player1: Player.new('Joe', 'J'), player2: Player.new('Bob', 'B'))
 game.play
