@@ -8,17 +8,17 @@ require_relative 'game_validate_moves'
 require_relative 'player_choices'
 require_relative 'player'
 
-game = GameManager.new(
-  player1: Player.new('Joe', 'X'),
-  player2: Player.new('Bill', 'O')
-)
+game = GameManager.new
 
-game.board.render
+game.play
+
+# joe = GamePrompt.new
+# joe.introduction
 
 # Set up the game initially(game manager) X
 #     Create a game board (board) X
 #     Create a couple players (board) X
-# Introduction (prompt) X
+# Introduction (prompt)
 # Start the game loop (game manager)
     # a players turn (game manager)
 #     notify whose turn it is (prompt)
